@@ -19,12 +19,15 @@ local.properties
 .target
 target/
 .idea/
+.mvn/
 *.iml
 dependency-reduced-pom.xml
 ConfigCenter_*
 /test-output
 *.log
-mvnw/
 *.cmd/
-*.mvn/
+Help.md
+mvnw
+mvnw.cmd
+
 
