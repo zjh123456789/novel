@@ -31,7 +31,7 @@ public class GenreService {
      * @param start 页码
      * @param size 每页记录数
      * @param navigatePages 显示的分页超链
-     * @return Page4Navigator<Genre> 封装类
+     * @return Page4Navigator<Genre> 类别分页封装类
      */
     public Page4Navigator<Genre> list(int start, int size, int navigatePages){
         Sort sort = new Sort(Sort.Direction.DESC,"id");

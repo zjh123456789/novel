@@ -28,6 +28,15 @@ public class NovelService {
     @Autowired
     GenreDAO genreDAO;
 
+    /**
+     * 分页查询小说
+     *
+     * @param genreId 类别id
+     * @param start 页码
+     * @param size 每页记录数
+     * @param navigatePages 显示的分页超链
+     * @return 小说分页封装类
+     */
     public Page4Navigator<Novel> list(int genreId, int start, int size, int navigatePages){
         Genre genre = genreDAO.getOne(genreId);
         Sort sort = new Sort(Sort.Direction.DESC, "id");

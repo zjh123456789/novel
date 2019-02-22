@@ -5,7 +5,6 @@ import com.zhujinghui.novel.service.GenreService;
 import com.zhujinghui.novel.service.NovelService;
 import com.zhujinghui.novel.util.Page4Navigator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -17,7 +16,7 @@ import java.util.Date;
  * @Modified By:
  */
 
-@Controller
+@RestController
 public class NovelController {
 
     @Autowired
