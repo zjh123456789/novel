@@ -11,31 +11,76 @@ import java.util.List;
  * @Modified By:
  */
 public class Page4Navigator<T> {
+    /**
+     * jpa 传递出来的分页对象, Page4Navigator 类就是对它进行封装以达到扩展的效果
+     */
     private Page<T> pageFromJPA;
+
+    /**
+     * 分页的时候 ,如果总页数比较多，那么显示出来的分页超链一个有几个。 比如如果分页出来的超链是这样的：
+     * [8,9,10,11,12], 那么 navigatePages 就是5
+     */
     private int navigatePages;
 
+    /**
+     * 总页数
+     */
     private int totalPages;
 
+    /**
+     * 页码(基0）
+     */
     private int number;
 
+    /**
+     * 一共有多少条数据
+     */
     private long totalElements;
 
+    /**
+     * 每页记录数
+     */
     private int size;
 
+    /**
+     * 当前页有多少条数据
+     */
     private int numberOfElements;
 
+    /**
+     * 数据集合
+     */
     private List<T> content;
 
+    /**
+     * 是否有数据
+     */
     private boolean isHasContent;
 
+    /**
+     * 是否是首页
+     */
     private boolean first;
 
+    /**
+     * 是否是末页
+     */
     private boolean last;
 
+    /**
+     * 是否有下一页
+     */
     private boolean isHasNext;
 
+    /**
+     * 是否有上一页
+     */
     private boolean isHasPrevious;
 
+    /**
+     * 分页的时候 ,如果总页数比较多，那么显示出来的分页超链一个有几个。 比如如果分页出来的超链是这样的： [8,9,10,11,12]，
+     * 那么 navigatepageNums 就是这个数组：[8,9,10,11,12]，这样便于前端展示
+     */
     private int[] navigatepageNums;
 
     /**

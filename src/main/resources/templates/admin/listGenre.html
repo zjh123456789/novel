@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="include/admin/adminHeader::html('分类管理')" ></head>
+<head th:include="include/admin/adminHeader::html('小说类别管理')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
     $(function(){
         var data4Vue = {
             uri:'genres',
-            beans: []
+            beans: [],
+            bean: {id:0, name:''},
+            pagination:{},
+            file: null
         };
 
         //ViewModel
@@ -16,14 +19,55 @@
             el: '#workingArea',
             data: data4Vue,
             mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-                this.list();
+                this.list(0);
             },
             methods: {
-                list:function(){
-                    var url =  this.uri;
+                list:function(start){
+                    var url =  this.uri + "?start=" + start;
                     axios.get(url).then(function(response) {
-                        vue.beans = response.data;
+                        vue.pagination = response.data;
+                        vue.beans = response.data.content;
                     });
+                },
+                add: function(){
+                    if (!checkEmpty(this.bean.name, "类别名称"))
+                        return;
+                    if (!checkEmpty(this.file, "类别图片"))
+                        return;
+                    var url = this.uri;
+
+                    //axios.js 上传文件要用 formData 这种方式
+                    var formData = new FormData();
+                    formData.append("image",this.file);
+                    formData.append("name",this.bean.name);
+                    axios.post(url,formData).then(function (response) {
+                        vue.list(0);
+                        vue.bean = {id:0, name:'', hp:'0'};
+                        $("#genrePic").val('');
+                        vue.file = null;
+                    })
+                },
+                deleteBean: function(id){
+                    if (!checkDeleteLink())
+                        return;
+                    var url = this.uri+"/"+id;
+                    axios.delete(url).then(function (response) {
+                        if (0 != response.data.length){
+                            alert(response.data);
+                        }
+                        else {
+                            vue.list(0);
+                        }
+                    })
+                },
+                getFile: function(event){
+                    this.file = event.target.files[0];
+                },
+                jump: function (page) {
+                    jump(page,vue); //定义在adminHeader.html中
+                },
+                jumpByNumber: function (start) {
+                    jumpByNumber(start,vue);
                 }
             }
         });
@@ -31,7 +75,7 @@
 
 </script>
 <div id="workingArea" >
-    <h1 class="label label-info" >分类管理</h1>
+    <h1 class="label label-info" >小说类别管理</h1>
     <br>
     <br>
     <div class="listDataTableDiv">
@@ -40,7 +84,7 @@
             <tr class="success">
                 <th>ID</th>
                 <th>图片</th>
-                <th>分类名称</th>
+                <th>类别名称</th>
                 <th>属性管理</th>
                 <th>小说管理</th>
                 <th>编辑</th>
@@ -60,7 +104,7 @@
                     <a :href="'admin_property_list?gid=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
                 </td>
                 <td>
-                    <a :href="'admin_product_list?gid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a :href="'admin_novel_list?gid=' + bean.id "><span class="glyphicon glyphicon-shopping-cart"></span></a>
                 </td>
                 <td>
                     <a :href="'admin_genre_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
@@ -71,6 +115,27 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div th:replace="include/admin/adminPage::html" ></div>
+    <div class="panel panel-warning addDiv">
+        <div class="panel-heading">新增类别</div>
+        <div class="panel-body">
+            <table class="addTable">
+                <tr>
+                    <td>类别名称</td>
+                    <td><input @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>类别图片</td>
+                    <td><input id="genrePic" accept="image/*" type="file" name="image" @change="getFile($event)" /></td>
+                </tr>
+                <tr class="submitTR">
+                    <td colspan="2" align="center">
+                        <a href="#nowhere"  @click="add" class="btn btn-success">提交</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 <div th:replace="include/admin/adminFooter::html" ></div>
