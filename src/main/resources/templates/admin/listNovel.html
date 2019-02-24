@@ -9,8 +9,8 @@
         var data4Vue = {
             uri: 'novels',
             beans: [],
-            bean: {id:0, name:'', 'desc':'', 'imagePath':'', 'genre':'', 'wordCount':'',
-                    'voteNumber':'', 'authorId':'', 'createTime':'', 'updateUid':'', 'updateTime':'', 'state':1},
+            bean: {id:0, name:'', 'desc':'', 'imagePath':'', genre:{'id':1}, 'wordCount':'',
+                    'voteNumber':'', 'authorId':1, 'createTime':'', 'updateUid':'', 'updateTime':'', 'state':1},
             pagination: {},
             genre: ''
         };
@@ -27,8 +27,8 @@
                 getGenre: function (genreId) {
                     var url = "genres/" + genreId;
                     axios.get(url).then(function (response) {
-                        vue.pagination = response.data;
-                    })
+                        vue.genre = response.data;
+                    });
                 },
                 list: function (start) {
                     var url = "genres/" + genreId + "/" + this.uri + "?start=" + start;
@@ -44,11 +44,11 @@
                     this.bean.genre.id = genreId;
                     axios.post(url,this.bean).then(function (response) {
                         vue.list(0);
-                        vue. bean = {id:0, name:'', 'desc':'', 'imagePath':'', 'genre':'', 'wordCount':'',
-                            'voteNumber':'', 'authorId':'', 'createTime':'', 'updateUid':'', 'updateTime':'', 'state':1},
+                        vue.bean = {id:0, name:'', 'desc':'', 'imagePath':'',  genre:{'id':1}, 'wordCount':'',
+                            'voteNumber':'', 'authorId':1, 'createTime':'', 'updateUid':'', 'updateTime':'', 'state':1};
                     });
                 },
-                deleteBean: function () {
+                deleteBean: function (id) {
                     if (!checkDeleteLink())
                         return;
                     var url = this.uri + "/" + id;
