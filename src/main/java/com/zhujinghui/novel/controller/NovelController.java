@@ -62,6 +62,7 @@ public class NovelController {
     @PostMapping("/novels")
     public Object add(@RequestBody Novel novel){
         novel.setCreateTime(new Date());
+        novel.setUpdateTime(new Date());
         novelService.add(novel);
         return novel;
     }

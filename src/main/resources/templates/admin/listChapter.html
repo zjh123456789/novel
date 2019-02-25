@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="include/admin/adminHeader::html('小说管理')" ></head>
+<head th:include="include/admin/adminHeader::html('小说章节管理')" ></head>
 <body>
 <div th:replace="include/admin/adminNavigator::html" ></div>
 <script>
     $(function () {
-        var genreId = getUrlParms("genreId");
+        var novelId = getUrlParms("novelId");
         var data4Vue = {
-            uri: 'novels',
+            uri: 'chapters',
             beans: [],
-            bean: {id:0, name:'', 'description':'', 'imagePath':'', genre:{'id':1}, 'wordCount':'',
-                    'voteNumber':'', 'authorId':1, 'createTime':'', 'updateUid':1, 'updateTime':'', 'state':1},
+            bean: {id:0, title:'', novel:{'id':1}, 'contents':'', 'wordCount':'', 'createUid':1, 'createTime':'', 'updateUid':1, 'updateTime':''},
             pagination: {},
-            genre: ''
+            novel: ''
         };
 
         //ViewModel
@@ -21,30 +20,30 @@
             data: data4Vue,
             mounted: function () {  //mounted 表示这个 Vue 对象加载成功了
                 this.list(0);
-                this.getGenre(genreId);
+                this.getNovel(novelId);
             },
             methods: {
-                getGenre: function (genreId) {
-                    var url = "genres/" + genreId;
+                getNovel: function (novelId) {
+                    var url = "novels/" + novelId;
                     axios.get(url).then(function (response) {
-                        vue.genre = response.data;
+                        vue.novel = response.data;
                     });
                 },
                 list: function (start) {
-                    var url = "genres/" + genreId + "/" + this.uri + "?start=" + start;
+                    var url = "novels/" + novelId + "/" + this.uri + "?start=" + start;
                     axios.get(url).then(function (resposne) {
                         vue.pagination = resposne.data;
                         vue.beans = resposne.data.content;
                     });
                 },
                 add: function () {
-                    if (!checkEmpty(this.bean.name, "小说名称"))
+                    if (!checkEmpty(this.bean.name, "章节标题"))
                         return;
                     var url = this.uri;
-                    this.bean.genre.id = genreId;
+                    this.bean.novel.id = novelId;
                     axios.post(url,this.bean).then(function (response) {
                         vue.list(0);
-                        vue.bean = {id:0, name:'', 'description':'', 'wordCount':999, 'authorId':1, 'updateUid':1, 'state':1, genre:{'id':1}};
+                        vue.bean =  {id:0, title:'', novel:{'id':1}, 'contents':'', 'wordCount':'', 'createUid':1, 'createTime':'', 'updateUid':1, 'updateTime':''};
                     });
                 },
                 deleteBean: function (id) {
@@ -72,8 +71,9 @@
 <div id="workingArea" >
     <ol class="breadcrumb">
         <li><a href="admin_genre_list">所有类别</a></li>
-        <li><a :href="'admin_novel_list?genreId='+genre.id">{{genre.name}}</a></li>
-        <li class="active">小说管理</li>
+        <li><a :href="'admin_novel_list?genreId='+novel.genre.id">{{novel.genre.name}}</a></li>
+        <li class="active">{{novel.name}}</li>
+        <li class="active">章节管理</li>
     </ol>
 
     <div class="listDataTableDiv">
@@ -81,17 +81,13 @@
             <thead>
             <tr class="success">
                 <th>ID</th>
-                <th>图片</th>
-                <th>小说名称</th>
-                <th>描述</th>
-                <th>总字数</th>
-                <th>投票数</th>
-                <th>作者</th>
-                <th>创建时间</th>
+                <th>章节标题</th>
+                <th>章节内容</th>
+                <th>字数</th>
                 <th>创建人</th>
+                <th>创建时间</th>
+                <th>更新人</th>
                 <th>更新时间</th>
-                <th>状态</th>
-                <th>章节管理</th>
                 <th>编辑</th>
                 <th>删除</th>
             </tr>
@@ -100,20 +96,16 @@
             <tr v-for="bean in beans ">
                 <td>{{bean.id}}</td>
                 <td>           </td>
-                <td>{{bean.name}}</td>
-                <td>{{bean.description}}</td>
+                <td>{{bean.title}}</td>
+                <td>
+                    {{bean.contents}}</td>
                 <td>{{bean.wordCount}}</td>
-                <td>{{bean.voteNumber}}</td>
-                <td>{{bean.authorId}}</td>
+                <td>{{bean.createUid}}</td>
                 <td>{{bean.createTime}}</td>
                 <td>{{bean.updateUid}}</td>
                 <td>{{bean.updateTime}}</td>
-                <td>{{bean.state}}</td>
                 <td>
-                    <a :href="'admin_chapter_list?novelId=' + bean.id "><span class="glyphicon glyphicon-th-list"></span></a>
-                </td>
-                <td>
-                    <a :href="'admin_novel_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
+                    <a :href="'admin_chapter_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
                 </td>
                 <td>
                     <a href="#nowhere"  @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
@@ -126,15 +118,15 @@
     <div th:replace="include/admin/adminPage::html" ></div>
 
     <div class="panel panel-warning addDiv">
-        <div class="panel-heading">新增小说</div>
+        <div class="panel-heading">新增章节</div>
         <div class="panel-body">
             <table class="addTable">
                 <tr>
-                    <td>小说名称</td>
+                    <td>章节名称</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.name" type="text" class="form-control"></td>
                 </tr>
                 <tr>
-                    <td>描述</td>
+                    <td>内容</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.description" type="text" class="form-control"></td>
                 </tr>
                 <tr>
@@ -143,15 +135,11 @@
                 </tr>
                 <tr>
                     <td>作者id</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.authorId" type="text" class="form-control"></td>
+                    <td><input  @keyup.enter="add" v-model.trim="bean.createUid" type="text" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>更新人id</td>
                     <td><input  @keyup.enter="add" v-model.trim="bean.updateUid"  type="text" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>状态</td>
-                    <td><input  @keyup.enter="add" v-model.trim="bean.state"  type="text"  class="form-control"></td>
                 </tr>
 
                 <tr class="submitTR">

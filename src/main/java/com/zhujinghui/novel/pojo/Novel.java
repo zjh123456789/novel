@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_novel")
-@JsonIgnoreProperties({"handler","hibernatelazyInitializer"})
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Novel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +24,8 @@ public class Novel {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "desc")
-    private String desc;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "image_path")
     private String imagePath;
@@ -74,12 +74,12 @@ public class Novel {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public String getImagePath() {
@@ -159,7 +159,7 @@ public class Novel {
         return "Novel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
+                ", description='" + description + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", genre=" + genre +
                 ", wordCount=" + wordCount +

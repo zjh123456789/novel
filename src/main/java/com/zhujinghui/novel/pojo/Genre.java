@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "t_genre")
-@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Genre {
     /**
      * 主键ID

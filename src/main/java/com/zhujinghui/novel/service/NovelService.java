@@ -48,7 +48,7 @@ public class NovelService {
     /**
      * 添加小说
      *
-     * @param novel
+     * @param novel 小说
      */
     public void add(Novel novel){
         novelDAO.save(novel);
@@ -67,7 +67,7 @@ public class NovelService {
      * 根据id 查询小说
      *
      * @param id 小说主键id
-     * @return novel
+     * @return novel 小说
      */
     public Novel get(int id){
         Novel novel = novelDAO.findById(id).get();
@@ -77,7 +77,7 @@ public class NovelService {
     /**
      * 更新小说
      *
-     * @param novel
+     * @param novel 小说
      */
     public void update(Novel novel){
         novelDAO.save(novel);
