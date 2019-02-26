@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminPageController {
 
     /**
+     * 后台首页
+     */
+    @GetMapping("/index")
+    public String index(){
+        return "admin/index";
+    }
+
+    /**
      * 重定向到 admin_genre_list
      */
     @GetMapping(value = "/admin")
@@ -70,19 +78,19 @@ public class AdminPageController {
     }
 
     /**
-     * 跳转到用户页面
+     * 跳转到读者管理页面
      */
-    @GetMapping(value = "admin_user_list")
-    public String listUser(){
-        return "admin/listUser";
+    @GetMapping(value = "admin_reader_list")
+    public String listReader(){
+        return "admin/listReader";
     }
 
     /**
-     * 跳转到用户编辑界面
+     * 跳转到读者编辑界面
      */
-    @GetMapping(value = "admin_user_edit")
-    public String editUser(){
-        return "admin/editUser";
+    @GetMapping(value = "admin_reader_edit")
+    public String editReader(){
+        return "admin/editReader";
     }
 
 }
