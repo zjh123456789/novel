@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ChapterService {
+
     @Autowired
     ChapterDAO chapterDAO;
 
@@ -29,6 +30,7 @@ public class ChapterService {
 
     /**
      * 分页查询章节
+     *
      * @param novelId 小说id
      * @param start 页码
      * @param size 每页记录数
