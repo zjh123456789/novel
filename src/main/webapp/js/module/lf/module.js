@@ -89,12 +89,28 @@ config.module = {
                     href: pageConfig.projectPath + 'admin_novel_list?genreId=1'
                 },
                 {
-                    text: '言情',
-                    href: '/order/finish'
+                    text: '修真',
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=2'
+                },
+                {
+                    text: '都市',
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=3'
+                },
+                {
+                    text: '历史',
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=4'
+                },
+                {
+                    text: '网游',
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=5'
                 },
                 {
                     text: '科幻',
-                    href: '/order/cancel'
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=6'
+                },
+                {
+                    text: '女频',
+                    href: pageConfig.projectPath + 'admin_novel_list?genreId=7'
                 }
             ]
         },
@@ -104,49 +120,30 @@ config.module = {
             menu: [
                 {
                     icon: 'folder',
-                    text: '待发布小说',
+                    text: '待审核小说',
                     childrenOpen: false,
                     children: [
                         {
-                            text: '待完成',
+                            text: '未完结',
                             href: '/shop/ready/contact'
                         },
                         {
-                            text: '待提交',
-                            href: '/shop/ready/decoration'
-                        },
-                        {
-                            text: '待审核',
-                            href: '/shop/ready/check'
-                        }
-                    ]
-                },
-                {
-                    icon: 'folder',
-                    text: '已发布小说',
-                    childrenOpen: false,
-                    children: [
-                        {
-                            text: '发布中',
-                            href: '/shop/ready/contact'
-                        },
-                        {
-                            text: '已完成',
+                            text: '已完结',
                             href: '/shop/ready/decoration'
                         }
                     ]
                 },
                 {
                     icon: 'folder',
-                    text: '已完结小说',
+                    text: '已审核小说',
                     childrenOpen: false,
                     children: [
                         {
-                            text: '发布中',
+                            text: '未完结',
                             href: '/shop/ready/contact'
                         },
                         {
-                            text: '已完成',
+                            text: '已完结',
                             href: '/shop/ready/decoration'
                         }
                     ]
@@ -168,11 +165,11 @@ config.module = {
                         },
                         {
                             text: 'vip会员',
-                            href: '/user/member'
+                            href: pageConfig.projectPath + 'admin_reader_list'
                         },
                         {
                             text: '作者',
-                            href: '/user/author'
+                            href: pageConfig.projectPath + 'admin_author_list'
                         }
                     ]
                 },
@@ -182,11 +179,11 @@ config.module = {
                     childrenOpen: false,
                     children: [
                         {
-                            text: '分配权限',
+                            text: '添加权限',
                             href: '/user/member'
                         },
                         {
-                            text: '权限',
+                            text: '分配权限',
                             href: '/user/member'
                         }
                     ]

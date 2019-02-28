@@ -70,7 +70,7 @@ public class GenreController {
     @DeleteMapping("/genres/{id}")
     public String delete(@PathVariable("id") int id, HttpServletRequest request){
         genreService.delete(id);
-        File imageFolder = new File(request.getServletContext().getRealPath("img/genre"));
+        File imageFolder = new File(request.getServletContext().getRealPath("images/genre"));
         File file = new File(imageFolder,id+".jpg");
         file.delete();
         return null;
@@ -108,14 +108,14 @@ public class GenreController {
      * @throws IOException 写入文件异常
      */
     public void saveOrUpdateImageFile(Genre genre, MultipartFile image, HttpServletRequest request) throws IOException {
-        File imageFolder = new File(request.getServletContext().getRealPath("img/genre"));
+        File imageFolder = new File(request.getServletContext().getRealPath("images/genre"));
         File file = new File(imageFolder,genre.getId()+".jpg");
         if (!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
         image.transferTo(file);
-        BufferedImage img = ImageUtil.change2jpg(file);
-        ImageIO.write(img,"jpg",file);
+        BufferedImage images = ImageUtil.change2jpg(file);
+        ImageIO.write(images,"jpg",file);
     }
 
     /**

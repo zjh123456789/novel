@@ -22,6 +22,14 @@ public class AdminPageController {
     }
 
     /**
+     * 后台首页
+     */
+    @GetMapping("/layui")
+    public String layui(){
+        return "index";
+    }
+
+    /**
      * 重定向到 admin_genre_list
      */
     @GetMapping(value = "/admin")
@@ -34,7 +42,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "/admin_genre_list")
     public String listGenre(){
-        return "admin/listGenre";
+        return "admin/genreList";
     }
 
     /**
@@ -42,7 +50,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "/admin_genre_edit")
     public String editGenre(){
-        return "admin/editGenre";
+        return "admin/genreEdit";
     }
 
     /**
@@ -50,7 +58,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "/admin_novel_list")
     public String listNovel(){
-        return "admin/listNovel";
+        return "admin/novelList";
     }
 
     /**
@@ -58,7 +66,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "admin_novel_edit")
     public String editNovel(){
-        return "admin/editNovel";
+        return "admin/novelEdit";
     }
 
     /**
@@ -66,7 +74,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "admin_chapter_list")
     public String listChapter(){
-        return "admin/listChapter";
+        return "admin/chapterList";
     }
 
     /**
@@ -74,7 +82,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "admin_chapter_edit")
     public String editChapter(){
-        return "admin/editChapter";
+        return "admin/chapterEdit";
     }
 
     /**
@@ -82,7 +90,7 @@ public class AdminPageController {
      */
     @GetMapping(value = "admin_reader_list")
     public String listReader(){
-        return "admin/listReader";
+        return "admin/readerList";
     }
 
     /**
@@ -90,7 +98,23 @@ public class AdminPageController {
      */
     @GetMapping(value = "admin_reader_edit")
     public String editReader(){
-        return "admin/editReader";
+        return "admin/readerEdit";
+    }
+
+    /**
+     * 跳转到管理员信息页面
+     */
+    @GetMapping(value = "admin_admin_list")
+    public String listAdmin(){
+        return "admin/adminList";
+    }
+
+    /**
+     * 跳转到管理员编辑界面
+     */
+    @GetMapping(value = "admin_admin_edit")
+    public String editAdmin(){
+        return "admin/adminEdit";
     }
 
 }
